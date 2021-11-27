@@ -54,7 +54,11 @@ Tag.update(req.body,{
     tag_name: req.body.tag_name
   }
 })
+.then(dbTagData =>{
+  res.json(dbTagData)
+})
 });
+
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
