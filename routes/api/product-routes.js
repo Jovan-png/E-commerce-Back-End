@@ -5,12 +5,45 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', (req, res) => {
-  // find all products
+ Product.findAll({
+   include:{
+     model: Category,
+     attributes: ['id','category_name']
+   },
+   include:{
+     model: Tag,
+     attributes: ['id','tag_name'],
+   }
+ })
+ .then(dbProdData =>{
+   res.json(dbProdData)
+ })
   // be sure to include its associated Category and Tag data
 });
 
 // get one product
 router.get('/:id', (req, res) => {
+  Product.findOne({
+    where:{
+      id: req.params.id
+    },
+    include:{
+      model: Category,
+      attributes: ['id','category_name']
+    },
+    include:{
+      model: Tag,
+      attributes: ['id','tag_name'],
+    }
+  })
+  .then(dbProdData =>{
+    if(!dbProdData){
+      res.status(500).json({ message: 'DID NOT FIND'})
+
+    }else{
+      res.json(dbProdData)
+    }
+  })
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 });
@@ -25,7 +58,12 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
-  Product.create(req.body)
+  Product.create({
+    product_name: req.body.product_name,
+    price: req.body.price,
+    stock: req.body.stock,
+    tagIds: req.body.tagIds
+  })
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
