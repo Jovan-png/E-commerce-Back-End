@@ -63,9 +63,6 @@ router.delete('/:id', (req, res) => {
     where:{
       id: req.params.id
     },
-    attributes:{
-      category_name: req.body.category_name
-    }
   })
   .then(dbCatData =>{
     res.json(dbCatData)
