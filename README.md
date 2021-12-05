@@ -22,8 +22,8 @@ Made By Jovan
 ## Installation
 
 1. Make sure Node.js And npm are installed. 
-2. 2. Create db with "source db/schema.sql" 
-3. 3. Run seed with "npm run seed".
+2. Create db with "source db/schema.sql" 
+3. Run seed with "npm run seed".
 
 ## Usage
 
