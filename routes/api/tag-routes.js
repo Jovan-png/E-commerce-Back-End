@@ -61,7 +61,14 @@ Tag.update(req.body,{
 
 
 router.delete('/:id', (req, res) => {
-  // delete on tag by its `id` value
+Tag.destroy({
+  where:{
+    id: req.params.id
+  }
+})
+.then(dbTagData =>{
+  res.json(dbTagData)
+})
 });
 
 module.exports = router;
